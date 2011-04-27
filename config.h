@@ -103,7 +103,7 @@
 
 #define	Z_MIN			0.0
 #define	Z_MAX			140.0
-*//
+*/
 
 
 /***************************************************************************\
@@ -178,8 +178,8 @@
 
 #define	X_STEP_PIN						DIO26
 #define	X_DIR_PIN							DIO28
-#define	X_MIN_PIN							DIO3
-#define	X_MAX_PIN							DIO2
+//#define	X_MIN_PIN							DIO3
+//#define	X_MAX_PIN							DIO2
 #define	X_ENABLE_PIN					DIO24
 //#define	X_INVERT_DIR
 //#define	X_INVERT_MIN
@@ -188,8 +188,8 @@
 
 #define	Y_STEP_PIN						DIO38
 #define	Y_DIR_PIN							DIO40
-#define	Y_MIN_PIN							DIO16
-#define	Y_MAX_PIN							DIO17
+//#define	Y_MIN_PIN							DIO16
+//#define	Y_MAX_PIN							DIO17
 #define	Y_ENABLE_PIN					DIO36
 //#define	Y_INVERT_DIR
 //#define	Y_INVERT_MIN
@@ -198,8 +198,8 @@
 
 #define	Z_STEP_PIN						DIO44
 #define	Z_DIR_PIN							DIO46
-#define	Z_MIN_PIN							DIO18
-#define	Z_MAX_PIN							DIO19
+//#define	Z_MIN_PIN							DIO18
+//#define	Z_MAX_PIN							DIO19
 #define	Z_ENABLE_PIN					DIO42
 //#define	Z_INVERT_DIR
 //#define	Z_INVERT_MIN
