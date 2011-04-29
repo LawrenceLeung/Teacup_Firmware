@@ -69,14 +69,16 @@ struct {
 	uint8_t						heater_output;					///< this is the PID value we eventually send to the heater
 } heaters_runtime[NUM_HEATERS];
 
+// LL: numbers from http://forums.reprap.org/read.php?12,28145
+
 /// default scaled P factor, equivalent to 8.0
-#define		DEFAULT_P				8192
+#define		DEFAULT_P				(int)(8.5f*1024.0)
 /// default scaled I factor, equivalent to 0.5
-#define		DEFAULT_I				512
+#define		DEFAULT_I				(int)(0.13f*1024.0)
 /// default scaled D factor, equivalent to 24
-#define		DEFAULT_D				24576
+#define		DEFAULT_D				30*1024
 /// default scaled I limit
-#define		DEFAULT_I_LIMIT	384
+#define		DEFAULT_I_LIMIT	120
 
 /// this lives in the eeprom so we can save our PID settings for each heater
 typedef struct {
