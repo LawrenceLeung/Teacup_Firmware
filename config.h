@@ -56,12 +56,12 @@
 // half-stepping doubles the number, quarter stepping requires * 4, etc.
 #define MICROSTEPPING_X				16.0
 #define MICROSTEPPING_Y				16.0
-#define MICROSTEPPING_Z				16.0
+#define MICROSTEPPING_Z				4.0
 #define MICROSTEPPING_E				4.0
 
-#define	STEPS_PER_MM_X				(5.0*MICROSTEPPING_X)
-#define	STEPS_PER_MM_Y				(5.0*MICROSTEPPING_Y)
-#define	STEPS_PER_MM_Z				(420*MICROSTEPPING_Z)
+#define	STEPS_PER_MM_X				(2.0417*MICROSTEPPING_X)
+#define	STEPS_PER_MM_Y				(2.039*MICROSTEPPING_Y)
+#define	STEPS_PER_MM_Z				(160.704*MICROSTEPPING_Z)
 
 /// http://blog.arcol.hu/?p=157 may help with this one
 #define	STEPS_PER_MM_E				(.784*MICROSTEPPING_E)
