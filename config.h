@@ -131,7 +131,7 @@
 /// how fast to accelerate when using ACCELERATION_RAMPING
 /// smaller values give quicker acceleration
 /// valid range = 1 to 8,000,000; 500,000 is a good starting point
-#define ACCELERATION_STEEPNESS	500000
+#define ACCELERATION_STEEPNESS	100000
 
 /** \def ACCELERATION_TEMPORAL
 	temporal step algorithm
@@ -201,10 +201,10 @@
 //#define	Z_MIN_PIN							DIO18
 //#define	Z_MAX_PIN							DIO19
 #define	Z_ENABLE_PIN					DIO42
-//#define	Z_INVERT_DIR
+#define	Z_INVERT_DIR  1
 //#define	Z_INVERT_MIN
 //#define	Z_INVERT_MAX
-//#define	Z_INVERT_ENABLE
+//#define	Z_INVERT_ENABLE  1
 
 #define	E_STEP_PIN						DIO32
 #define	E_DIR_PIN							DIO34
@@ -413,7 +413,7 @@ PWM value for 'off'
 	temperature history count. This is how many temperature readings to keep in order to calculate derivative in PID loop
 	higher values make PID derivative term more stable at the expense of reaction time
 */
-#define	TH_COUNT					8
+#define	TH_COUNT					4
 
 /// this is the scaling of internally stored PID values. 1024L is a good value
 #define	PID_SCALE						1024L
