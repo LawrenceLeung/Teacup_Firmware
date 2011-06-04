@@ -29,7 +29,6 @@
 	which is about the worst case we have. All other machines have a bigger build volume.
 */
 
-#define	STEPS_PER_M_X			((uint32_t) ((STEPS_PER_MM_X * 1000.0) + 0.5))
 #define	STEPS_PER_M_Y			((uint32_t) ((STEPS_PER_MM_Y * 1000.0) + 0.5))
 #define	STEPS_PER_M_Z			((uint32_t) ((STEPS_PER_MM_Z * 1000.0) + 0.5))
 #define	STEPS_PER_M_E			((uint32_t) ((STEPS_PER_MM_E * 1000.0) + 0.5))
@@ -38,7 +37,6 @@
 	mm -> inch conversion
 */
 
-#define	STEPS_PER_IN_X		((uint32_t) ((25.4 * STEPS_PER_MM_X) + 0.5))
 #define	STEPS_PER_IN_Y		((uint32_t) ((25.4 * STEPS_PER_MM_Y) + 0.5))
 #define	STEPS_PER_IN_Z		((uint32_t) ((25.4 * STEPS_PER_MM_Z) + 0.5))
 #define	STEPS_PER_IN_E		((uint32_t) ((25.4 * STEPS_PER_MM_E) + 0.5))
@@ -81,6 +79,8 @@ GCODE_COMMAND next_target		__attribute__ ((__section__ (".bss")));
 */
 extern const uint32_t powers[];  // defined in sermsg.c
 
+// TODO: When the new approach to pass distances in micrometers instead of step
+//       numbers stays, this should be replaced by a simplified version.
 /// convert a floating point input value into an integer with appropriate scaling.
 /// \param *df pointer to floating point structure that holds fp value to convert
 /// \param multiplicand multiply by this amount during conversion to integer
@@ -127,20 +127,20 @@ void gcode_parse_char(uint8_t c) {
 			switch (last_field) {
 				case 'G':
 					next_target.G = read_digit.mantissa;
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint8(next_target.G);
 					break;
 				case 'M':
 					next_target.M = read_digit.mantissa;
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint8(next_target.M);
 					break;
 				case 'X':
 					if (next_target.option_inches)
-						next_target.target.X = decfloat_to_int(&read_digit, STEPS_PER_IN_X, 0);
+						next_target.target.X = decfloat_to_int(&read_digit, 25400, 1);
 					else
-						next_target.target.X = decfloat_to_int(&read_digit, STEPS_PER_M_X, 1);
-					if (debug_flags & DEBUG_ECHO)
+						next_target.target.X = decfloat_to_int(&read_digit, 1000, 0);
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_int32(next_target.target.X);
 					break;
 				case 'Y':
@@ -148,7 +148,7 @@ void gcode_parse_char(uint8_t c) {
 						next_target.target.Y = decfloat_to_int(&read_digit, STEPS_PER_IN_Y, 0);
 					else
 						next_target.target.Y = decfloat_to_int(&read_digit, STEPS_PER_M_Y, 1);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_int32(next_target.target.Y);
 					break;
 				case 'Z':
@@ -156,7 +156,7 @@ void gcode_parse_char(uint8_t c) {
 						next_target.target.Z = decfloat_to_int(&read_digit, STEPS_PER_IN_Z, 0);
 					else
 						next_target.target.Z = decfloat_to_int(&read_digit, STEPS_PER_M_Z, 1);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_int32(next_target.target.Z);
 					break;
 				case 'E':
@@ -164,7 +164,7 @@ void gcode_parse_char(uint8_t c) {
 						next_target.target.E = decfloat_to_int(&read_digit, STEPS_PER_IN_E, 0);
 					else
 						next_target.target.E = decfloat_to_int(&read_digit, STEPS_PER_M_E, 1);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint32(next_target.target.E);
 					break;
 				case 'F':
@@ -173,7 +173,7 @@ void gcode_parse_char(uint8_t c) {
 						next_target.target.F = decfloat_to_int(&read_digit, 25400, 1);
 					else
 						next_target.target.F = decfloat_to_int(&read_digit, 1, 0);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint32(next_target.target.F);
 					break;
 				case 'S':
@@ -187,27 +187,27 @@ void gcode_parse_char(uint8_t c) {
 						next_target.S = decfloat_to_int(&read_digit, PID_SCALE, 0);
 					else
 						next_target.S = decfloat_to_int(&read_digit, 1, 0);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint16(next_target.S);
 					break;
 				case 'P':
 					next_target.P = decfloat_to_int(&read_digit, 1, 0);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint16(next_target.P);
 					break;
 				case 'T':
 					next_target.T = read_digit.mantissa;
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint8(next_target.T);
 					break;
 				case 'N':
 					next_target.N = decfloat_to_int(&read_digit, 1, 0);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint32(next_target.N);
 					break;
 				case '*':
 					next_target.checksum_read = decfloat_to_int(&read_digit, 1, 0);
-					if (debug_flags & DEBUG_ECHO)
+					if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 						serwrite_uint8(next_target.checksum_read);
 					break;
 			}
@@ -222,7 +222,7 @@ void gcode_parse_char(uint8_t c) {
 		// new field?
 		if ((c >= 'A' && c <= 'Z') || c == '*') {
 			last_field = c;
-			if (debug_flags & DEBUG_ECHO)
+			if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 				serial_writechar(c);
 		}
 
@@ -331,7 +331,7 @@ void gcode_parse_char(uint8_t c) {
 
 	// end of line
 	if ((c == 10) || (c == 13)) {
-		if (debug_flags & DEBUG_ECHO)
+		if (DEBUG_ECHO && (debug_flags & DEBUG_ECHO))
 			serial_writechar(c);
 
 		if (
@@ -352,7 +352,7 @@ void gcode_parse_char(uint8_t c) {
 				// process
 				serial_writestr_P(PSTR("ok "));
 				process_gcode_command();
-				serial_writestr_P(PSTR("\n"));
+				serial_writechar('\n');
 
 				// expect next line number
 				if (next_target.seen_N == 1)

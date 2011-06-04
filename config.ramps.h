@@ -50,16 +50,27 @@
 		All numbers are fixed point integers, so no more than 3 digits to the right of the decimal point, please :-)
 */
 
-// calculate these values appropriate for your machine
-// for threaded rods, this is (steps motor per turn) / (pitch of the thread)
-// for belts, this is (steps per motor turn) / (number of gear teeth) / (belt module)
-// half-stepping doubles the number, quarter stepping requires * 4, etc.
+/** \def STEPS_PER_M
+	steps per meter ( = steps per mm * 1000 )
+
+	calculate these values appropriate for your machine
+
+	for threaded rods, this is
+		(steps motor per turn) / (pitch of the thread) * 1000
+
+	for belts, this is
+		(steps per motor turn) / (number of gear teeth) / (belt module) * 1000
+
+	half-stepping doubles the number, quarter stepping requires * 4, etc.
+
+	valid range = 20 to 4'0960'000 (0.02 to 40960 steps/mm)
+*/
 #define MICROSTEPPING_X				16.0
 #define MICROSTEPPING_Y				16.0
 #define MICROSTEPPING_Z				16.0
 #define MICROSTEPPING_E				4.0
 
-#define	STEPS_PER_MM_X				(5.023*MICROSTEPPING_X)
+#define	STEPS_PER_M_X				(5023*MICROSTEPPING_X)
 #define	STEPS_PER_MM_Y				(5.023*MICROSTEPPING_Y)
 #define	STEPS_PER_MM_Z				(416.699*MICROSTEPPING_Z)
 
@@ -104,6 +115,11 @@
 #define	Z_MIN			0.0
 #define	Z_MAX			140.0
 
+/**	\def E_ABSOLUTE
+	Some G-Code creators produce relative length commands for the extruder, others absolute ones. G-Code using absolute lengths can be recognized when there are G92 E0 commands from time to time. If you have G92 E0 in your G-Code, define this flag.
+*/
+// #define E_ABSOLUTE
+
 
 
 /***************************************************************************\
@@ -128,10 +144,9 @@
 */
 #define ACCELERATION_RAMPING
 
-/// how fast to accelerate when using ACCELERATION_RAMPING
-/// smaller values give quicker acceleration
-/// valid range = 1 to 8,000,000; 500,000 is a good starting point
-#define ACCELERATION_STEEPNESS	500000
+/// how fast to accelerate when using ACCELERATION_RAMPING, given in mm/s^2
+/// decimal allowed, useful range 1. to 10'000, typical range 10. to 100.
+#define ACCELERATION 10.
 
 /** \def ACCELERATION_TEMPORAL
 	temporal step algorithm

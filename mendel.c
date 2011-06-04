@@ -183,6 +183,14 @@ void io_init(void) {
 		power_off();
 	#endif
 
+	// set all heater pins to output
+	do {
+		#undef	DEFINE_HEATER
+		#define	DEFINE_HEATER(name, pin) WRITE(pin, 0); SET_OUTPUT(pin);
+			#include "config.h"
+		#undef DEFINE_HEATER
+	} while (0);
+
 	#ifdef	TEMP_MAX6675
 		// setup SPI
 		WRITE(SCK, 0);				SET_OUTPUT(SCK);
@@ -217,8 +225,8 @@ void init(void) {
 	// read PID settings from EEPROM
 	heater_init();
 
-	// set up default feedrate
-	current_position.F = startpoint.F = next_target.target.F = SEARCH_FEEDRATE_Z;
+	// set up dda
+	dda_init();
 
 	// start up analog read interrupt loop,
 	// if any of the temp sensors in your config.h use analog interface
@@ -254,7 +262,7 @@ int main (void)
 			gcode_parse_char(c);
 		}
 
-		ifclock(CLOCK_FLAG_10MS) {
+		ifclock(clock_flag_10ms) {
 			clock_10ms();
 		}
 	}
