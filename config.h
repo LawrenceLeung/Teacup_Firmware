@@ -64,7 +64,12 @@
 #define	STEPS_PER_MM_Z				(160.704*MICROSTEPPING_Z)
 
 /// http://blog.arcol.hu/?p=157 may help with this one
-#define	STEPS_PER_MM_E				(.784*MICROSTEPPING_E)
+
+// Mig Tip #1  (.6mm)
+#define	STEPS_PER_MM_E				(5.68*.784*MICROSTEPPING_E)
+
+// Old Tip
+//#define	STEPS_PER_MM_E				(2.5*.784*MICROSTEPPING_E)
 
 
 /*
@@ -78,7 +83,10 @@
 #define	MAXIMUM_FEEDRATE_X		3000
 #define	MAXIMUM_FEEDRATE_Y		3000
 #define	MAXIMUM_FEEDRATE_Z		120
-#define	MAXIMUM_FEEDRATE_E		3200
+
+#define	MAXIMUM_FEEDRATE_E		2000
+
+//#define	MAXIMUM_FEEDRATE_E		3200
 
 /// used when searching endstops and as default feedrate
 #define	SEARCH_FEEDRATE_X			3000
@@ -181,7 +189,7 @@
 //#define	X_MIN_PIN							DIO3
 //#define	X_MAX_PIN							DIO2
 #define	X_ENABLE_PIN					DIO24
-//#define	X_INVERT_DIR
+//#define	X_INVERT_DIR  1
 //#define	X_INVERT_MIN
 //#define	X_INVERT_MAX
 //#define	X_INVERT_ENABLE
