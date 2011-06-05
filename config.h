@@ -1,7 +1,7 @@
 /* Notice to developers: this file is intentionally included twice. */
 
 /** \file
- \brief RAMPS Sample Configuration
+ \brief RAMPS Configuration for MongrelBot
  http://reprap.org/wiki/Arduino_Mega_Pololu_Shield
 */
 
@@ -65,17 +65,18 @@
 
 	valid range = 20 to 4'0960'000 (0.02 to 40960 steps/mm)
 */
-#define MICROSTEPPING_X				16.0
+#define MICROSTEPPING_X				16
 #define MICROSTEPPING_Y				16.0
-#define MICROSTEPPING_Z				16.0
+#define MICROSTEPPING_Z				4.0
 #define MICROSTEPPING_E				4.0
 
-#define	STEPS_PER_M_X				(5023*MICROSTEPPING_X)
-#define	STEPS_PER_MM_Y				(5.023*MICROSTEPPING_Y)
-#define	STEPS_PER_MM_Z				(416.699*MICROSTEPPING_Z)
+#define	STEPS_PER_M_X				(2042*MICROSTEPPING_X)
+#define	STEPS_PER_MM_Y				(2.039*MICROSTEPPING_Y)
+#define	STEPS_PER_MM_Z				(160.704*MICROSTEPPING_Z)
 
 /// http://blog.arcol.hu/?p=157 may help with this one
-#define	STEPS_PER_MM_E				(2.759*MICROSTEPPING_E)
+// Mig Tip #1 (.6mm) ~.92mm ext
+#define	STEPS_PER_MM_E				(5.68*.784*MICROSTEPPING_E)
 
 
 /*
@@ -86,15 +87,15 @@
 */
 
 /// used for G0 rapid moves and as a cap for all other feedrates
-#define	MAXIMUM_FEEDRATE_X		200
-#define	MAXIMUM_FEEDRATE_Y		200
-#define	MAXIMUM_FEEDRATE_Z		100
-#define	MAXIMUM_FEEDRATE_E		600
+#define	MAXIMUM_FEEDRATE_X		2000
+#define	MAXIMUM_FEEDRATE_Y		2000
+#define	MAXIMUM_FEEDRATE_Z		120
+#define	MAXIMUM_FEEDRATE_E		1000
 
 /// used when searching endstops and as default feedrate
 #define	SEARCH_FEEDRATE_X			50
 #define	SEARCH_FEEDRATE_Y			50
-#define	SEARCH_FEEDRATE_Z			1
+#define	SEARCH_FEEDRATE_Z			10
 // no SEARCH_FEEDRATE_E, as E can't be searched
 
 /// this is how many steps to suck back the filament by when we stop. set to zero to disable
@@ -105,7 +106,7 @@
 	Soft axis limits, in mm
 	undefine if you don't want to use them
 */
-
+/*
 #define	X_MIN			0.0
 #define	X_MAX			200.0
 
@@ -114,7 +115,7 @@
 
 #define	Z_MIN			0.0
 #define	Z_MAX			140.0
-
+*/
 /**	\def E_ABSOLUTE
 	Some G-Code creators produce relative length commands for the extruder, others absolute ones. G-Code using absolute lengths can be recognized when there are G92 E0 commands from time to time. If you have G92 E0 in your G-Code, define this flag.
 */
@@ -193,8 +194,8 @@
 
 #define	X_STEP_PIN						DIO26
 #define	X_DIR_PIN							DIO28
-#define	X_MIN_PIN							DIO3
-#define	X_MAX_PIN							DIO2
+//#define	X_MIN_PIN							DIO3
+//#define	X_MAX_PIN							DIO2
 #define	X_ENABLE_PIN					DIO24
 //#define	X_INVERT_DIR
 //#define	X_INVERT_MIN
@@ -203,8 +204,8 @@
 
 #define	Y_STEP_PIN						DIO38
 #define	Y_DIR_PIN							DIO40
-#define	Y_MIN_PIN							DIO16
-#define	Y_MAX_PIN							DIO17
+//#define	Y_MIN_PIN							DIO16
+//#define	Y_MAX_PIN							DIO17
 #define	Y_ENABLE_PIN					DIO36
 //#define	Y_INVERT_DIR
 //#define	Y_INVERT_MIN
@@ -213,10 +214,10 @@
 
 #define	Z_STEP_PIN						DIO44
 #define	Z_DIR_PIN							DIO46
-#define	Z_MIN_PIN							DIO18
-#define	Z_MAX_PIN							DIO19
+//#define	Z_MIN_PIN							DIO18
+//#define	Z_MAX_PIN							DIO19
 #define	Z_ENABLE_PIN					DIO42
-//#define	Z_INVERT_DIR
+#define	Z_INVERT_DIR  1
 //#define	Z_INVERT_MIN
 //#define	Z_INVERT_MAX
 //#define	Z_INVERT_ENABLE
